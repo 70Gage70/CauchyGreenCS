@@ -1,0 +1,4 @@
+- CoherentStructures v0.4.12
+- OrdinaryDiffEq v6.44.1
+- `map(CG, P)` in `mwe.jl` takes `704 ms`
+- `map(CG, P)` in `mwe2.jl` takes `6.014 ms`

@@ -1,0 +1,3 @@
+- CoherentStructures v0.4.9
+- OrdinaryDiffEq v6.2.0
+- `map(CG, P)` takes `1.79 ms`
