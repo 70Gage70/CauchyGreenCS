@@ -79,7 +79,7 @@ end
 
 CG = let ts = tspan
 	u -> is_land(u) ? one(SymmetricTensor{2,2}) :
-	     CG_tensor(
+	     CG_tensor_sph(
 	vF,
 	u,
 	ts,
@@ -89,4 +89,5 @@ CG = let ts = tspan
 	)
 end
 
-@btime map(CG, P)
+CG(P[1,1])
+# @btime map(CG, P)

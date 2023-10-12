@@ -34,6 +34,10 @@ v = SVector{2}.(vx, vy);
 #Fv = interpolateVF(xrange, yrange, trange, vx, vy) # old
 Fv = interpolateVF_new(xrange, yrange, trange, vx, vy) # new
 
+function Fv_periodic(x, y, t)
+	return Fv(mod(x, 2*pi), y, t)
+end
+
 # dealing with land...
 landx = dropdims(mapslices(all∘iszero, vx; dims=[3]); dims=3)
 landy = dropdims(mapslices(all∘iszero, vy; dims=[3]); dims=3)
@@ -72,7 +76,7 @@ T = 19
 # extract vortices
 tspan = range(t0, stop=t0+T, length=2)
 
-CG = let ts = tspan, p = Fv
+CG = let ts = tspan, p = Fv_periodic
 	u -> is_land(u) ? one(SymmetricTensor{2,2}) :
 	     CG_tensor(
 	interp_rhs,
@@ -85,4 +89,8 @@ CG = let ts = tspan, p = Fv
 	)
 end
 
-@btime map(CG, P)
+@info "Computing."
+
+CG(P[1, 1])
+
+# @btime map(CG, P)
